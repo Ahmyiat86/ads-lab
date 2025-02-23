@@ -1,0 +1,85 @@
+#include<iostream>
+using namespace std;
+template<class t>
+class stack
+{
+private:
+t a[10];
+int top;
+public:
+stack();
+void push(t item);
+t pop();
+t topelement();
+void display();
+};
+template<class t>
+stack<t>::stack()
+{
+top=-1;
+}
+template<class t>
+t stack<t>::topelement()
+{
+if(top==-1)
+cout<<"stack is empty\n";
+else
+return a[top];
+}
+template <class t>
+void stack<t>::push(t item)
+{
+if(top==9)
+cout<<"\nStack is full\n\n";
+else
+{
+top++;
+a[top]=item;
+}
+}
+template<class t> t
+stack<t> ::pop()
+{
+if(top==-1)
+cout<<"\n\nStack is empty\n\n";
+else
+{
+
+t item=a[top];
+top--;
+return item;
+}
+}
+template<class t>
+void stack<t>::display()
+{
+cout<<"\nstack contents are\n";
+for(int i=top;i!=-1;i--)
+cout<<a[i]<<"\n";
+}
+int main()
+{
+stack<int> s;
+int i;
+s.push(11);
+s.push(23);
+s.push(-8);
+s.push(16);
+s.push(27);
+s.push(14);
+s.push(20);
+s.push(39);
+s.display();
+cout<<"\ntopmost element is:"<<s.topelement()<<"\n";
+i=s.pop();
+cout<<"\n item popped\n"<<i;
+i=s.pop();
+cout<<"\n item popped\n"<<i;
+i=s.pop();
+cout<<"\n item popped\n"<<i;
+i=s.pop();
+cout<<"\n item popped\n"<<i;
+s.display();
+cout<<"\ntopmost element is:"<<s.topelement()<<"\n";
+return 0;
+}

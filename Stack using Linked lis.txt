@@ -1,0 +1,94 @@
+#include<iostream>
+using namespace std;
+template <class t>
+class stack
+{
+private:
+struct node
+{
+t data;
+node *link;
+}*top;
+public:
+stack();
+void push(t item);
+t pop();
+void display();
+void topelement();
+};
+template <class t>
+stack<t>:: stack()
+{
+top=NULL;
+}
+template <class t>
+void stack<t>::push(t item)
+{
+node *temp; temp = new node;
+if(temp==NULL)
+cout<<"\n\n Stack is full\n\n";
+temp->data=item;
+temp->link=top;
+top=temp;
+}
+template <class t>
+t stack<t>::pop()
+{
+if(top==NULL)
+cout<<"\nStack is empty\n";
+else
+{
+node *temp;
+t item;
+temp=top;
+item=temp->data;
+top=top->link;
+delete temp;
+return item;
+}
+}
+
+
+template<class t>
+void stack<t>::display()
+{
+if(top==NULL)
+cout<<"\nStack is empty\n";
+else
+{
+cout<<"\n\nStack elements are:\n";
+node *temp;
+for(temp=top;temp!=NULL;temp=temp->link)
+cout<<temp->data<<endl;
+}
+}
+template <class t>
+void stack<t>::topelement()
+{
+if(top==0)
+cout<<"\nStack is empty\n";
+else
+cout<<"\nTop element is"<<top->data<<endl;
+}
+int main()
+{
+stack<int> s;
+int i;
+s.push(10);
+s.push(17);
+s.push(21);
+s.push(30);
+s.push(80);
+s.push(90);
+s.display();
+s.topelement();
+i=s.pop();
+cout<<"\nElement popped\n"<<i;
+i=s.pop();
+cout<<"\nElement popped\n"<<i;
+i=s.pop();
+cout<<"\nElement popped\n"<<i;
+s.display();
+s.topelement();
+return 0;
+}
