@@ -1,0 +1,107 @@
+#include<iostream>
+using namespace std;
+template<class t>
+class btnode
+{
+public:
+t data;
+btnode *lchild;
+btnode *rchild;
+btnode(t item)
+{
+data=item;
+lchild=0;
+rchild=0;
+}
+};
+template<class t>
+class btree
+{
+public:
+btnode<t>*root; btree()
+{
+root=NULL;
+}
+void create(t);
+void insert(t);
+void preorder(btnode<t>*);
+};
+template<class t>
+void btree<t>::create(t n)
+{
+t item;
+int i=1;
+if(n<=0)
+return;
+else
+{
+cout<<"\nEnter the root node:";
+cin>>item;
+root=new btnode<t>(item);
+while(i<n)
+{
+cout<<"\n Input a node:";
+cin>>item;
+insert(item);
+i++;
+}
+}
+
+}
+template<class t>
+void btree<t>::insert(t item)
+{
+beginning:
+btnode<t>*p=root;
+btnode<t>*q=0;
+while(p)
+{
+q=p;
+if(item==p->data)
+{
+cout<<"\nDuplicates are not allowed\n";
+cout<<"\nInsert another value:";
+cin>>item;
+goto beginning;
+}
+if(item<p->data)
+p=p->lchild;
+else
+p=p->rchild;
+}
+p=new btnode<t>(item);
+if(root==NULL)
+root=p;
+else if(item<q->data)
+q->lchild=p;
+else
+q->rchild=p;
+}
+template<class t>
+void btree<t>::preorder(btnode<t>*current)
+{
+if(root==NULL)
+cout<<"\nTree is empty\n";
+else
+{
+if(current!=NULL)
+{
+cout<<endl<<current->data<<"\n";
+preorder(current->lchild);
+preorder(current->rchild);
+}
+}
+}
+int main()
+{
+btree<int>b;
+int n;
+cout<<"\nEnter the number of nodes in a tree:\n\n";
+cin>>n;
+
+
+b.create(n);
+b.preorder(b.root);
+return 0;
+
+}

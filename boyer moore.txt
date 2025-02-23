@@ -1,0 +1,85 @@
+#include<iostream>
+using namespace std;
+void computeFullShift(int shiftArr[], int longSuffArr[], string patrn)
+{
+int n = patrn.size();
+int i = n;
+int j = n+1;
+longSuffArr[i] = j;
+while(i > 0)
+{
+while(j <= n && patrn[i-1] != patrn[j-1] )
+{
+if(shiftArr[j] == 0)
+{
+shiftArr[j] = j-i;
+}
+j = longSuffArr[j];
+}
+i--;
+j--;
+longSuffArr[i] = j;
+}
+}
+void computeGoodSuffix(int shiftArr[], int longSuffArr[], string patrn)
+{
+int n = patrn.size();
+int j;
+j = longSuffArr[0];
+for(int i = 0; i<n; i++)
+{
+if(shiftArr[i] == 0)
+{
+shiftArr[i] = j;
+if(i == j)
+{
+j = longSuffArr[j];
+}
+}
+}
+}
+void searchPattern(string orgnStr, string patrn, int array[], int *index)
+{
+int patLen = patrn.size();
+int strLen = orgnStr.size();
+int longerSuffArray[patLen+1];
+int shiftArr[patLen + 1];
+for(int i = 0; i<=patLen; i++)
+{
+shiftArr[i] = 0;
+
+}
+computeFullShift(shiftArr, longerSuffArray, patrn);
+computeGoodSuffix(shiftArr, longerSuffArray, patrn);
+int shift = 0;
+while(shift <= (strLen - patLen))
+{
+int j = patLen - 1;
+while(j >= 0 && patrn[j] == orgnStr[shift+j])
+{
+j--;
+}
+if(j < 0)
+{
+(*index)++;
+array[(*index)] = shift;
+shift += shiftArr[0];
+}
+else
+{
+shift += shiftArr[j+1];
+}
+}
+}
+int main()
+{
+string orgnStr = "AABAAABCEDBABCDDEBC";
+string patrn = "ABC";
+int locArray[orgnStr.size()];
+int index = -1;
+searchPattern(orgnStr, patrn, locArray, &index);
+for(int i = 0; i <= index; i++)
+{
+cout << "Pattern found at position: " << locArray[i]<<endl;
+}
+}

@@ -1,0 +1,102 @@
+#include<iostream>
+using namespace std;
+template<class t>
+class queue
+{
+private:
+t a[10];
+t front,rear;
+public:
+queue();
+void addq(t item);
+t delq();
+void frontelement();
+void rearelement();
+void display();
+};
+template<class t>
+queue<t>::queue()
+{
+front=-1;
+rear=-1;
+}
+template<class t>
+void queue<t>::addq(t item)
+{
+if(rear==9)
+cout<<"\n\nQueue is full\n";
+rear++;
+a[rear]=item;
+if(front==-1)
+front=0;
+}
+template<class t>
+t queue<t>::delq()
+{
+t data;
+if(front==-1)
+cout<<"\n\nQueue is Empty\n";
+data=a[front];
+a[front]=0;
+if(front==rear)
+front=rear=-1;
+else
+front++;
+return data;
+}
+template<class t>
+void queue<t>::frontelement()
+{
+
+
+if(front==-1)
+cout<<"\n\nQueue is empty\n";
+else
+cout<<"\n\nFront element is"<<a[front]<<endl;
+}
+template<class t>
+void queue<t>::rearelement()
+{
+if(front==-1)
+cout<<"\n\nQueue is empty\n";
+else
+cout<<"\n\nRear element is"<<a[rear]<<endl;
+}
+template<class t>
+void queue<t>::display()
+{
+if(front==-1)
+cout<<"\nQueue is empty\n";
+else
+{
+cout<<"\n\nElements in queue are\n";
+for(int i=front;i<=rear;i++)
+cout<<a[i]<<endl;
+}
+}
+int main()
+{
+queue<int> q;
+int i;
+q.addq(23);
+q.addq(3);
+q.addq(-12);
+q.addq(30);
+q.addq(14);
+q.addq(54);
+q.addq(90);
+q.addq(-29);
+q.display();
+q.frontelement();
+q.rearelement();
+i=q.delq();
+cout<<"\nItem deleted: "<<i;
+i=q.delq();
+cout<<"\nItem deleted:"<<i;
+i=q.delq();
+cout<<"\nItem deleted:"<<i;
+q.display();
+q.frontelement();
+q.rearelement();
+return 0;
+}

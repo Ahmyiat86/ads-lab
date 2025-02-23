@@ -1,0 +1,165 @@
+#include <iostream>
+using namespace std;
+template <class t>
+class linkedlist
+{
+private :
+struct dnode
+{
+dnode *prev;
+t data;
+dnode *next;
+}*p;
+public :
+linkedlist( ) ;
+void d_append (t num ) ;
+void d_addatbeg ( t num) ;
+void d_addafter ( int loc,t num) ;
+void d_display( ) ;
+void d_count( ) ;
+void d_delete( t num) ;
+};
+template<class t> linkedlist<t>::linkedlist( )
+{
+p = NULL ;
+}
+template<class t>
+void linkedlist<t>::d_append(t num )
+{
+dnode*r,*q ;
+q=p;
+if(q==NULL)
+{
+q=new dnode;
+q->prev=NULL;
+q->data=num;
+q->next=NULL;
+}
+else
+{
+while( q->next!=NULL)
+q=q->next;
+r=new dnode;
+r->data=num;
+r->next=NULL;
+r->prev=q;
+q->next=r;
+p=q;
+}
+}
+
+template<class t>
+void linkedlist<t>::d_addatbeg( t num)
+{
+dnode *q;
+q=new dnode;
+q->prev=NULL;
+q->data=num;
+q->next=p;
+p->prev=q;
+p=q;
+}
+template<class t>
+void linkedlist<t>::d_addafter(int loc,t num )
+{
+dnode *q;
+q=p;
+for (int i=1;i<loc;i++)
+{
+q=q->next;
+if(q==NULL)
+cout<<"\nThere are less than "<<loc<<" elements\n";
+}
+dnode *temp=new dnode;
+temp->data=num;
+temp->prev=q;
+temp->next=q->next;
+temp->next->prev=temp;
+q->next=temp;
+}
+template<class t>
+void linkedlist<t>::d_display( )
+{
+dnode *temp=p;
+cout<<endl;
+while(temp!=NULL)
+{
+cout<<temp->data<<" ";
+temp=temp->next;
+}
+}
+template<class t>
+void linkedlist<t>::d_count( )
+{
+int c=0;
+dnode *temp=p;
+while (temp!=NULL)
+{
+temp=temp->next;
+c++;
+}
+cout <<"No. of elements in the linked list are "<<c<<endl;
+}
+
+ADVANCED DATA STRUCTURES LAB(2024-2025)MJCET
+
+template<class t>
+void linkedlist<t>::d_delete(t num )
+{
+dnode *q=p;
+while(q!=NULL)
+{
+if(q->data==num)
+{
+if(q==p)
+{
+p=p->next;
+p->prev=NULL;
+}
+else
+{
+if(q->next==NULL)
+q->prev->next=NULL;
+else
+{
+q->prev->next=q->next;
+q->next->prev=q->prev;
+}
+delete q;
+}
+}
+q=q->next;
+}
+}
+int main()
+{
+linkedlist<int> l;
+l.d_append(11);
+l.d_append(2);
+l.d_append(14);
+l.d_append(17);
+l.d_append(99);
+cout<<”\n\nElements in the doubly linked list:\n”;
+l.d_display();
+l.d_count();
+l.d_addatbeg(33);
+l.d_addatbeg(55);
+cout<<”\n\nElements in the doubly linked list after addition at the beginning
+are:\n”;
+l.d_display();
+l.d_count();
+l.d_addafter(4,66);
+l.d_addafter(2,96);
+cout<<”\n\nElements in the doubly linked list after addition at given position
+
+are:\n\n”;
+l.d_display();
+l.d_delete(55);
+l.d_delete(2);
+
+
+cout<<”\n\nElements in the doubly linked list after deletion are:\n\n”;
+l.d_display();
+l.d_count();
+return 0;
+}

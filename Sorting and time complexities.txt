@@ -1,0 +1,156 @@
+#include <iostream>
+#include <ctime> // For timing
+#include <iomanip> // For formatting the table
+using namespace std;
+void printArray(int arr[], int size) // Function to print the array
+{
+for (int i = 0; i < size; i++)
+cout << arr[i] << " ";
+cout << endl;
+}
+void bubbleSort(int arr[], int size) // Bubble Sort
+{
+for (int i = 0; i < size - 1; i++)
+for (int j = 0; j < size - i - 1; j++)
+if (arr[j] > arr[j + 1])
+swap(arr[j], arr[j + 1]);
+}
+void selectionSort(int arr[], int size) // Selection Sort
+{
+for (int i = 0; i < size - 1; i++)
+{
+int minIdx = i;
+for (int j = i + 1; j < size; j++)
+if (arr[j] < arr[minIdx])
+minIdx = j;
+swap(arr[i], arr[minIdx]);
+}
+}
+void insertionSort(int arr[], int size) // Insertion Sort
+{
+for (int i = 1; i < size; i++)
+{
+int key = arr[i];
+int j = i - 1;
+while (j >= 0 && arr[j] > key)
+{
+arr[j + 1] = arr[j];
+j--;
+}
+arr[j + 1] = key;
+}
+}
+void quickSort(int arr[], int low, int high)
+{
+if (low < high)
+{
+int pivot = arr[high], i = low - 1;
+for (int j = low; j < high; j++)
+
+
+if (arr[j] < pivot)
+swap(arr[++i], arr[j]);
+}
+swap(arr[i + 1], arr[high]);
+quickSort(arr, low, i);
+quickSort(arr, i + 2, high);
+}
+}
+void merge(int arr[], int l, int m, int r)
+{
+int n1 = m - l + 1, n2 = r - m, L[n1], R[n2];
+for (int i = 0; i < n1; i++)
+L[i] = arr[l + i];
+for (int i = 0; i < n2; i++)
+R[i] = arr[m + 1 + i];
+int i = 0, j = 0, k = l;
+while (i < n1 && j < n2)
+arr[k++] = (L[i] <= R[j]) ? L[i++] : R[j++];
+while (i < n1)
+arr[k++] = L[i++];
+while (j < n2)
+arr[k++] = R[j++];
+}
+void mergeSort(int arr[], int l, int r)
+{
+if (l < r)
+{
+int m = l + (r - l) / 2;
+mergeSort(arr, l, m);
+mergeSort(arr, m + 1, r);
+merge(arr, l, m, r);
+}
+}
+void displayComplexities()
+{
+cout << "\nSorting Algorithm Complexities:\n";
+cout << "+---------------+-------------------------+-------------------------+\n";
+cout << "| Algorithm | Time Complexity | Space Complexity |\n";
+cout << "+---------------+-------------------------+-------------------------+\n";
+cout << "| Bubble Sort | O(n^2) | O(1) |\n";
+cout << "| Selection Sort| O(n^2) | O(1) |\n";
+cout << "| Insertion Sort| O(n^2), O(n) best-case | O(1) |\n";
+cout << "| Quick Sort | O(n log n), O(n^2) worst| O(log n) |\n";
+cout << "| Merge Sort | O(n log n) | O(n) |\n";
+cout << "+---------------+-------------------------+-------------------------+\n";
+}
+int main()
+{
+int arr[] = {64, 34, 25, 12, 22, 11, 90, 400, 900, 8, 9000, 9, 60, 67, 56, 82, 27};
+int size = sizeof(arr) / sizeof(arr[0]);
+int temp[size];
+clock_t start, end;
+
+
+double duration;
+cout << "Original Array: ";
+printArray(arr, size);
+// Bubble Sort
+copy(arr, arr + size, temp);
+start = clock();
+bubbleSort(temp, size);
+end = clock();
+duration = double(end - start) / CLOCKS_PER_SEC * 1000;
+cout << "Bubble Sort: ";
+printArray(temp, size);
+cout << "Time Taken: " << duration << " ms\n";
+// Selection Sort
+copy(arr, arr + size, temp);
+start = clock();
+selectionSort(temp, size);
+end = clock();
+duration = double(end - start) / CLOCKS_PER_SEC * 1000;
+cout << "Selection Sort: ";
+printArray(temp, size);
+cout << "Time Taken: " << duration << " ms\n";
+// Insertion Sort
+copy(arr, arr + size, temp);
+start = clock();
+insertionSort(temp, size);
+end = clock();
+duration = double(end - start) / CLOCKS_PER_SEC * 1000;
+cout << "Insertion Sort: ";
+printArray(temp, size);
+cout << "Time Taken: " << duration << " ms\n";
+// Quick Sort
+copy(arr, arr + size, temp);
+start = clock();
+quickSort(temp, 0, size - 1);
+end = clock();
+duration = double(end - start) / CLOCKS_PER_SEC * 1000;
+cout << "Quick Sort: ";
+printArray(temp, size);
+cout << "Time Taken: " << duration << " ms\n";
+// Merge Sort
+copy(arr, arr + size, temp);
+start = clock();
+mergeSort(temp, 0, size - 1);
+end = clock();
+duration = double(end - start) / CLOCKS_PER_SEC * 1000;
+cout << "Merge Sort: ";
+printArray(temp, size);
+cout << "Time Taken: " << duration << " ms\n";
+// Display complexities
+displayComplexities();
+return 0;
+}

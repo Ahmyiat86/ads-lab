@@ -1,0 +1,56 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+// Function to calculate Fibonacci numbers using Dynamic Programming
+int fibonacci(int n)
+{
+if (n <= 1) return n;
+int dp[100]; // Assuming n <= 99
+dp[0] = 0; // Base case
+dp[1] = 1; // Base case
+for (int i = 2; i <= n; i++)
+dp[i] = dp[i - 1] + dp[i - 2];
+return dp[n];
+}
+// Function to solve the 0/1 Knapsack problem using Dynamic Programming
+int knapsack(int W, int weights[], int values[], int n)
+{
+int dp[100][100]; // Assuming constraints for W and n <= 99
+for (int i = 0; i <= n; i++)
+{
+for (int w = 0; w <= W; w++)
+{
+if (i == 0 || w == 0)
+dp[i][w] = 0;
+else if (weights[i - 1] <= w)
+dp[i][w] = max(dp[i - 1][w], values[i - 1] + dp[i - 1][w - weights[i - 1]]);
+else
+dp[i][w] = dp[i - 1][w];
+}
+}
+return dp[n][W];
+}
+int main()
+{
+// Problem 1: Fibonacci Sequence
+cout << "Dynamic Programming: Fibonacci Sequence" << endl;
+int n;
+cout << "Enter the value of n for Fibonacci: ";
+cin >> n;
+cout << "Fibonacci(" << n << ") = " << fibonacci(n) << endl;
+// Problem 2: 0/1 Knapsack Problem
+cout << "\nDynamic Programming: 0/1 Knapsack Problem" << endl;
+int items, W;
+cout << "Enter the number of items: ";
+cin >> items;
+cout << "Enter the maximum weight capacity of the knapsack: ";
+cin >> W;
+int weights[100], values[100]; // Assuming constraints for items <= 99
+
+cout << "Enter the weights and values of the items:" << endl;
+for (int i = 0; i < items; i++)
+cin >> weights[i] >> values[i];
+int max_value = knapsack(W, weights, values, items);
+cout << "Maximum value that can be put in the knapsack: " << max_value << endl;
+return 0;
+}
